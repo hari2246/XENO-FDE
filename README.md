@@ -17,13 +17,13 @@ This project is deployed on **Railway** with separate services for frontend and 
 #Architecture
 <img width="2048" height="2048" alt="xeno-architecture" src="https://github.com/user-attachments/assets/3c053f2e-a750-4430-820e-ea102ac58cd9" />
 
-Clone the repository
+##Clone the repository
 
 git clone https://github.com/hari2246/XENO-FDE.git
 cd XENO-FDE
 
 
-Backend Setup
+##Backend Setup
 
 cd backend
 
@@ -32,14 +32,14 @@ npm install
 npm run dev
 
 
-Frontend Setup
+##Frontend Setup
 
 cd ../frontend
 npm install
 npm start
 
 
-Visit https://profound-vitality-production.up.railway.app/ to access the frontend.
+##Visit https://profound-vitality-production.up.railway.app/ to access the frontend.
 
 📌 Tech Stack
 
