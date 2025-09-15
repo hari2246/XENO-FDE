@@ -12,30 +12,7 @@ This project is deployed on **Railway** with separate services for frontend and 
 - **API-Driven Architecture** – Clean separation between frontend and backend.
 - **Scalable Deployment** – Deployed on Railway with separate frontend and backend services.
 
----
 
-## 📂 Project Structure
-
-XENO-FDE/
-│
-├── backend/ # Node.js + Express + MySQL backend
-│ ├── src/
-│ │ ├── index.js # Entry point
-│ │ ├── routes/ # API routes
-│ │ ├── controllers/ # Business logic
-│ │ ├── models/ # Database models
-│ │ └── middleware/ # Authentication middleware
-│ └── package.json
-│
-├── frontend/ # React frontend
-│ ├── src/
-│ │ ├── components/ # UI components
-│ │ ├── pages/ # Pages (Login, Dashboard)
-│ │ ├── api.js # Axios API calls
-│ │ └── App.js
-│ └── package.json
-│
-└── README.md
 
 #Architecture
 <img width="2048" height="2048" alt="xeno-architecture" src="https://github.com/user-attachments/assets/3c053f2e-a750-4430-820e-ea102ac58cd9" />
@@ -49,7 +26,9 @@ cd XENO-FDE
 Backend Setup
 
 cd backend
+
 npm install
+
 npm run dev
 
 
