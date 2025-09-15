@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   LineChart,
   XAxis, 
@@ -14,15 +14,28 @@ import { fetchDashboardData, fetchProducts, fetchCustomers, fetchOrders } from '
 
 const Dashboard = ({ token, onLogout }) => {
     const [view, setView] = useState('metrics');
-    const [data, setData] = useState({ metrics: null, ordersByDate: [], topCustomers: [], allCustomers: [], allOrders: [], allProducts: [] });
+    const [data, setData] = useState({ 
+        metrics: null, 
+        ordersByDate: [], 
+        topCustomers: [], 
+        allCustomers: [], 
+        allOrders: [], 
+        allProducts: [] 
+    });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    const getDashboardData = async (authToken) => {
+    // ✅ useCallback to avoid eslint warning
+    const getDashboardData = useCallback(async (authToken) => {
         try {
             setLoading(true);
             const dashboardData = await fetchDashboardData(authToken);
-            setData(prev => ({ ...prev, metrics: dashboardData.metrics, ordersByDate: dashboardData.ordersByDate, topCustomers: dashboardData.topCustomers }));
+            setData(prev => ({ 
+                ...prev, 
+                metrics: dashboardData.metrics, 
+                ordersByDate: dashboardData.ordersByDate, 
+                topCustomers: dashboardData.topCustomers 
+            }));
             console.log(dashboardData.ordersByDate);
         } catch (err) {
             console.error('Failed to fetch dashboard data:', err);
@@ -32,8 +45,8 @@ const Dashboard = ({ token, onLogout }) => {
         } finally {
             setLoading(false);
         }
-    };
-    
+    }, [onLogout]);
+
     const getCustomers = async (authToken) => {
         try {
             setLoading(true);
@@ -44,7 +57,7 @@ const Dashboard = ({ token, onLogout }) => {
             console.error('Failed to fetch customers:', err);
             setError('Your session has expired. Please log in again.');
             localStorage.removeItem('token');
-            onLogout(); // Force logout on error
+            onLogout();
         } finally {
             setLoading(false);
         }
@@ -60,7 +73,7 @@ const Dashboard = ({ token, onLogout }) => {
             console.error('Failed to fetch orders:', err);
             setError('Your session has expired. Please log in again.');
             localStorage.removeItem('token');
-            onLogout(); // Force logout on error
+            onLogout();
         } finally {
             setLoading(false);
         }
@@ -76,12 +89,13 @@ const Dashboard = ({ token, onLogout }) => {
             console.error('Failed to fetch products:', err);
             setError('Your session has expired. Please log in again.');
             localStorage.removeItem('token');
-            onLogout(); // Force logout on error
+            onLogout();
         } finally {
             setLoading(false);
         }
     };
 
+    // ✅ Added getDashboardData to dependency array
     useEffect(() => {
         if (token) {
             getDashboardData(token);
@@ -89,7 +103,7 @@ const Dashboard = ({ token, onLogout }) => {
             setError('No token found. Please log in.');
             setLoading(false);
         }
-    }, [token]);
+    }, [token, getDashboardData]);
 
     if (loading) {
         return (
@@ -175,7 +189,6 @@ const Dashboard = ({ token, onLogout }) => {
                           <YAxis yAxisId="right" orientation="right" />
                           <Tooltip />
                           <Legend />
-                          {/* First line for orders */}
                           <Line
                             yAxisId="left"
                             type="monotone"
@@ -185,7 +198,6 @@ const Dashboard = ({ token, onLogout }) => {
                             strokeWidth={2}
                             dot={{ r: 3 }}
                           />
-                          {/* Second line for revenue */}
                           <Line
                             yAxisId="right"
                             type="monotone"
@@ -199,16 +211,14 @@ const Dashboard = ({ token, onLogout }) => {
                       </ResponsiveContainer>
                     </div>
 
-
-
                     <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-200">
                         <h2 className="text-2xl font-bold mb-4 text-gray-900">Top 5 Customers by Spend</h2>
                         <div className="overflow-x-auto">
                             <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
                                     <tr>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Spend</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Spend</th>
                                     </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -234,7 +244,7 @@ const Dashboard = ({ token, onLogout }) => {
                     </div>
                 </>
             )}
-            
+
             {/* All Customers View */}
             {view === 'customers' && (
                 <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-200">

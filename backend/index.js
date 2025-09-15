@@ -10,7 +10,7 @@ const app = express();
 
 // ---------------------------- Middleware ----------------------------
 const corsOptions = {
-    origin: ['http://localhost:3000', 'https://xeno-fde-production.up.railway.app'],
+    origin: ['http://localhost:3000'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
