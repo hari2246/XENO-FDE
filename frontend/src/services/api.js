@@ -2,7 +2,7 @@ import { format } from 'date-fns';
 // import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer, Legend, Line, LineChart } from 'recharts';
 
 
-const API_BASE_URL = 'https://xeno-fde.railway.internal/api';
+const API_BASE_URL = 'https://xeno-fde-production.up.railway.app/api';
 
 const handleResponse = async (response) => {
     if (!response.ok) {
